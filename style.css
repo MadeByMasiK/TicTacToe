@@ -1,0 +1,58 @@
+body {
+    background-color: #FFF5E0;
+    margin: 0;
+}
+
+h1 {
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-size: 400%;
+    text-align: center;
+}
+
+h2 {
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-size: 275%;
+    text-align: center;
+}
+
+.column {
+    display: table;
+    padding-right: 4%;
+    padding-left: 4%;
+    padding-top: 2%;
+    padding-bottom: 2%; 
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 8%;
+    background-color: rgb(240, 99, 99);
+    outline-style: solid;
+    outline-color: black;
+}
+
+p a {
+    display: block;
+    color: #141E46;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-weight: bold;
+}
+
+.homeButton {
+    color: #141E46;
+    text-decoration: none;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+}
+
+.cover {
+    font-size: 200%;
+}
+
+a {
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+}
