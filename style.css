@@ -60,9 +60,7 @@ a {
 * {
     box-sizing: border-box;
 }
-body {
-    background-color: #0a0710;
-}
+
 .container {
     max-width: 500px;
     padding: 0 30px;
