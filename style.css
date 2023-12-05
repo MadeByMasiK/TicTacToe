@@ -95,7 +95,7 @@ a {
     background: #d3c9b4;
     position: relative;
     cursor: pointer;
-    color: #fff;
+    color: #000;
     font-size: calc(18px + 5vw);
     font-family: fantasy;
 }

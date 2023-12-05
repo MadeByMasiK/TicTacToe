@@ -69,7 +69,7 @@ function newGame(depth = -1, startingPlayer = 1) {
 let elementExistsHard = document.getElementById("newGameHard");
 let elementExistsEasy = document.getElementById("newGameEasy");
 
-if (typeof(elementExistsHard) != 'undefined' && element != null) {
+if (typeof(elementExistsHard) != 'undefined' && elementExistsHard != null) {
 document.addEventListener("DOMContentLoaded", () => { 
 	//Start a new game when page loads with default values
 	const depth = -1;
@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 }
 
-if (typeof(elementExistsEasy) != 'undefined' && element != null) {
+if (typeof(elementExistsEasy) != 'undefined' && elementExistsEasy != null) {
     document.addEventListener("DOMContentLoaded", () => { 
         //Start a new game when page loads with default values
         const depth = 1;
