@@ -94,6 +94,7 @@ if (document.getElementById("newGameHard")) {
         const startingPlayer = 1;
         newGame(depth, startingPlayer);
 
+        
 document.getElementById("newGameEasy").addEventListener('click', () => {
         const depth = 1;
         const startingPlayer = 1;
