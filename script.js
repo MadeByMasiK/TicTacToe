@@ -65,7 +65,7 @@ function newGame(depth = -1, startingPlayer = 1) {
         if(cell) addClass(htmlCells[index], cell);
     });
 }
-
+if (document.getElementById("newGameHard")) {
 document.addEventListener("DOMContentLoaded", () => { 
 	//Start a new game when page loads with default values
 	const depth = -1;
@@ -84,10 +84,20 @@ document.addEventListener("DOMContentLoaded", () => {
 	    const startingPlayer = 1;
         newGame(depth, startingPlayer);
     });
+});
+}
 
-    document.getElementById("newGameEasy").addEventListener('click', () => {
+if (document.getElementById("newGameHard")) {
+    document.addEventListener("DOMContentLoaded", () => { 
+        //Start a new game when page loads with default values
         const depth = 1;
-	    const startingPlayer = 1;
+        const startingPlayer = 1;
+        newGame(depth, startingPlayer);
+
+document.getElementById("newGameEasy").addEventListener('click', () => {
+        const depth = 1;
+        const startingPlayer = 1;
         newGame(depth, startingPlayer);
     });
 });
+}
