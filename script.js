@@ -71,12 +71,23 @@ document.addEventListener("DOMContentLoaded", () => {
 	const depth = -1;
 	const startingPlayer = 1;
     newGame(depth, startingPlayer);
-    //Start a new game with chosen options when new game button is clicked
+ /*   //Start a new game with chosen options when new game button is clicked
 	document.getElementById("newGame").addEventListener('click', () => {
 		const startingDIV = document.getElementById("starting");
 		const starting = startingDIV.options[startingDIV.selectedIndex].value;
 		const depthDIV = document.getElementById("depth");
         const depth = depthDIV.options[depthDIV.selectedIndex].value;
 		newGame(depth, starting);
-	});
+	}); */
+    document.getElementById("newGameHard").addEventListener('click', () => {
+        const depth = -1;
+	    const startingPlayer = 1;
+        newGame(depth, startingPlayer);
+    });
+
+    document.getElementById("newGameEasy").addEventListener('click', () => {
+        const depth = 1;
+	    const startingPlayer = 1;
+        newGame(depth, startingPlayer);
+    });
 });
