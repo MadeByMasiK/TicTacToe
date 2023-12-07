@@ -1,8 +1,10 @@
 import Board from './classes/board.js';
 import { drawWinningLine, hasClass, addClass } from './helpers.js';
-
+    // aloittaa uuden pelin, missä pelaajana 2 ihmistä
 function newGame(player1, player2) {
+    // luodaan pelilauta
     const board = new Board(['','','','','','','','','']);
+    // tyhjennetään kaikki classin board sisältävät html tagit ja luodaan solut html:llä
     const boardDIV = document.getElementById("board");
     boardDIV.className = '';
     boardDIV.innerHTML = 
@@ -17,20 +19,24 @@ function newGame(player1, player2) {
             <button class="cell-7"></button>
             <button class="cell-8"></button>
         </div>`;
+        // html solut talletetaan array
     const htmlCells = [...boardDIV.querySelector('.cells-wrap').children];
     let currentPlayer = player1;
-
+    // Luodaan klikkausta odottava event listener jokaiselle solulle
     board.state.forEach((cell, index) => {
         htmlCells[index].addEventListener('click', () => {
+            // jos solussa on jo merkki, peliä ei voi jatkaa tai ei ole pelaajan vuoro, palauta false
             if (hasClass(htmlCells[index], 'x') || hasClass(htmlCells[index], 'o') || board.isTerminal()) return false;
             const symbol = currentPlayer.symbol;
+            // päivitetään classin Board sisältöä (?) sekä UI
             board.insert(symbol, index);
             addClass(htmlCells[index], symbol);
-
+            // jos peliä ei voi jatkaa, eikä kyse ole tasapelistä, ihmispelaaja voittaa
             if (board.isTerminal()) {
                 drawWinningLine(board.isTerminal());
-                // Handle game over or tie
+                // piirretään viiva voittavalle suoralle
             } else {
+                // vaihtaa vuoron toiselle pelaajalle/merkille
                 currentPlayer = (currentPlayer === player1) ? player2 : player1;
             }
         }, false);
@@ -38,27 +44,27 @@ function newGame(player1, player2) {
         if (cell) addClass(htmlCells[index], cell);
     });
 }
-
+// player luokan määritys
 class Player {
     constructor(symbol) {
         this.symbol = symbol;
     }
 
-    // Add other player-related methods if needed
 }
-
+// luo pelaajajien omat symbolit
 const player1 = new Player('x');
 const player2 = new Player('o');
 
+// odottaa, että sivu on ladannut ennkuin aloittaa uutta peliä
 document.addEventListener("DOMContentLoaded", () => {
-    // New game with two human players (replace with AI if needed)
+   
     const player1 = new Player('x');
     const player2 = new Player('o');
 
-    // Start a new game with the specified depth and players
+    //aloittaa uuden pelin määritetyillä pelaajilla
     newGame(player1, player2);
 
-    // Button click event for starting a new game
+    // tuo nappulan html-sivulle, mikä aloittaa uuden pelin
     document.getElementById("newGameHard").addEventListener('click', () => {
         newGame(player1, player2);
     });
