@@ -1,5 +1,4 @@
 import Board from './classes/board.js';
-import Player from './classes/player.js';
 import { drawWinningLine, hasClass, addClass } from './helpers.js';
 
 function newGame() {
@@ -20,13 +19,13 @@ function newGame() {
         </div>`;
 
     const htmlCells = [...boardDIV.querySelector('.cells-wrap').children];
-    let playerTurn = 1;
+    let playerTurn = 'x'; // Start with player 'x'
 
     htmlCells.forEach((cell, index) => {
         cell.addEventListener('click', () => {
-            if (hasClass(cell, 'x') || hasClass(cell, 'o') || board.isTerminal() || playerTurn !== 1) return false;
+            if (hasClass(cell, 'x') || hasClass(cell, 'o') || board.isTerminal()) return false;
 
-            const symbol = playerTurn ? 'x' : 'o';
+            const symbol = playerTurn;
             board.insert(symbol, index);
             addClass(cell, symbol);
 
@@ -34,7 +33,7 @@ function newGame() {
                 drawWinningLine(board.isTerminal());
             }
 
-            playerTurn = 1 - playerTurn; // Switch turns
+            playerTurn = (playerTurn === 'x') ? 'o' : 'x'; // Switch turns
         });
 
         if (board.state[index]) addClass(cell, board.state[index]);
@@ -43,3 +42,31 @@ function newGame() {
 
 
 
+export function hasClass(el, className) {
+    if (el.classList) return el.classList.contains(className);
+    else return !!el.className.match(new RegExp("(\\s|^)" + className + "(\\s|$)"));
+}
+
+export function addClass(el, className) {
+    if (el.classList) el.classList.add(className);
+    else if (!hasClass(el, className)) el.className += " " + className;
+}
+
+export function removeClass(el, className) {
+    if (el.classList) el.classList.remove(className);
+    else if (hasClass(el, className)) {
+        var reg = new RegExp("(\\s|^)" + className + "(\\s|$)");
+        el.className = el.className.replace(reg, " ");
+    }
+}
+
+export function drawWinningLine(statusObject) {
+    if (!statusObject) return;
+    const { winner, direction, row, column, diagonal } = statusObject;
+    if (winner === "draw") return;
+    const board = document.getElementById("board");
+    addClass(board, `${direction.toLowerCase()}-${row || column || diagonal}`);
+    setTimeout(() => {
+        addClass(board, "fullLine");
+    }, 50);
+}
