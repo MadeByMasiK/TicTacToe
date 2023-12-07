@@ -33,7 +33,7 @@ function newGame(depth = -1, startingPlayer = 1) {
         htmlCells[index].addEventListener('click', () => {
             // jos solussa on jo merkki, peliä ei voi jatkaa tai ei ole pelaajan vuoro, palauta false
             if(hasClass(htmlCells[index], 'x') || hasClass(htmlCells[index], 'o') || board.isTerminal() || !playerTurn) return false;
-            const symbol = maximizing ? 'x' : 'o'; //Maximizing player is always 'x'
+            const symbol = maximizing ? 'x' : 'o'; //maximizing pelaaja on aina x
             // päivitetään classin Board sisältö (?) sekä UI
             board.insert(symbol, index);
             addClass(htmlCells[index], symbol);
@@ -43,21 +43,26 @@ function newGame(depth = -1, startingPlayer = 1) {
                 drawWinningLine(board.isTerminal());
             }
             playerTurn = 0; // vaihdetaan pelaajaa
-            //Get computer's best move and update the UI
+            // etsitään tietokoneen paras siirto ja päivitetään UI 
             player.getBestMove(board, !maximizing, best => {
+                // pistetään muuttujaan symbol se symbooli, jota käyttää se pelaaja, joka ei aloittanut
                 const symbol = !maximizing ? 'x' : 'o';
+                // seuraavalla kahdella rivillä 
                 board.insert(symbol, parseInt(best));
                 addClass(htmlCells[best], symbol);
+                // jos peliä ei voida jatkaa, eikä kyse ole tasapelistä, tietokone voittaa
                 if(board.isTerminal()) {
+                    // piirretään viiva voittavalle suoralle
                     drawWinningLine(board.isTerminal());
                 }
-                playerTurn = 1; //Switch turns
+                playerTurn = 1; // vaihdetaan pelaajaa
             });
         }, false);
         if(cell) addClass(htmlCells[index], cell);
     });
 }
 
+// luodaan muuttujat jotka sisältävät sivuilta pve_easy.html ja pve_hard.html löytyvät IDt
 let elementExistsHard = document.getElementById("newGameHard");
 let elementExistsEasy = document.getElementById("newGameEasy");
 
@@ -66,11 +71,14 @@ if (typeof(elementExistsHard) != 'undefined' && elementExistsHard != null) {
     document.addEventListener("DOMContentLoaded", () => { 
 	    //Aloita uusi peli vaikealla vaikeusasteella
 	    const depth = -1;
+        // määritetään aloittavaksi pelaajaksi ihminen
 	    const startingPlayer = 1;
         newGame(depth, startingPlayer);
         // napin painallus aloittaa uuden pelin vaikealla vaikeusasteella
         document.getElementById("newGameHard").addEventListener('click', () => {
+            //Aloita uusi peli vaikealla vaikeusasteella
             const depth = -1;
+            // määritetään aloittavaksi pelaajaksi ihminen
 	        const startingPlayer = 1;
             newGame(depth, startingPlayer);
         });
@@ -82,12 +90,15 @@ if (typeof(elementExistsEasy) != 'undefined' && elementExistsEasy != null) {
     document.addEventListener("DOMContentLoaded", () => { 
         //Aloita uusi peli helpolla vaikeusasteella
         const depth = 1;
+        // määritetään aloittavaksi pelaajaksi ihminen
         const startingPlayer = 1;
         newGame(depth, startingPlayer);
 
         // napin painallus aloittaa uuden pelin helpolla vaikeusasteella
         document.getElementById("newGameEasy").addEventListener('click', () => {
+            //Aloita uusi peli helpolla vaikeusasteella
             const depth = 1;
+            // määritetään aloittavaksi pelaajaksi ihminen
             const startingPlayer = 1;
             newGame(depth, startingPlayer);
         });
