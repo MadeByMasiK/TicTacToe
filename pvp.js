@@ -1,12 +1,11 @@
 import Board from './classes/board.js';
 import { drawWinningLine, hasClass, addClass } from './helpers.js';
 
-
-function newGame(player1, player2) {
-    const board = new Board(['','','','','','','','','']);
+function newGame() {
+    const board = new Board(['', '', '', '', '', '', '', '', '']);
     const boardDIV = document.getElementById("board");
     boardDIV.className = '';
-    boardDIV.innerHTML = 
+    boardDIV.innerHTML =
         `<div class="cells-wrap">
             <button class="cell-0"></button>
             <button class="cell-1"></button>
@@ -18,49 +17,56 @@ function newGame(player1, player2) {
             <button class="cell-7"></button>
             <button class="cell-8"></button>
         </div>`;
-    const htmlCells = [...boardDIV.querySelector('.cells-wrap').children];
-    let currentPlayer = player1;
 
-    board.state.forEach((cell, index) => {
-        htmlCells[index].addEventListener('click', () => {
-            if (hasClass(htmlCells[index], 'x') || hasClass(htmlCells[index], 'o') || board.isTerminal()) return false;
-            const symbol = currentPlayer.symbol;
+    const htmlCells = [...boardDIV.querySelector('.cells-wrap').children];
+    let playerTurn = 'x'; // Start with player 'x'
+
+    htmlCells.forEach((cell, index) => {
+        cell.addEventListener('click', () => {
+            if (hasClass(cell, 'x') || hasClass(cell, 'o') || board.isTerminal()) return false;
+
+            const symbol = playerTurn;
             board.insert(symbol, index);
-            addClass(htmlCells[index], symbol);
+            addClass(cell, symbol);
 
             if (board.isTerminal()) {
                 drawWinningLine(board.isTerminal());
-                // Handle game over or tie
-            } else {
-                currentPlayer = (currentPlayer === player1) ? player2 : player1;
             }
-        }, false);
 
-        if (cell) addClass(htmlCells[index], cell);
+            playerTurn = (playerTurn === 'x') ? 'o' : 'x'; // Switch turns
+        });
+
+        if (board.state[index]) addClass(cell, board.state[index]);
     });
 }
 
-class Player {
-    constructor(symbol) {
-        this.symbol = symbol;
+
+
+export function hasClass(el, className) {
+    if (el.classList) return el.classList.contains(className);
+    else return !!el.className.match(new RegExp("(\\s|^)" + className + "(\\s|$)"));
+}
+
+export function addClass(el, className) {
+    if (el.classList) el.classList.add(className);
+    else if (!hasClass(el, className)) el.className += " " + className;
+}
+
+export function removeClass(el, className) {
+    if (el.classList) el.classList.remove(className);
+    else if (hasClass(el, className)) {
+        var reg = new RegExp("(\\s|^)" + className + "(\\s|$)");
+        el.className = el.className.replace(reg, " ");
     }
-
-    // Add other player-related methods if needed
 }
 
-const player1 = new Player('x');
-const player2 = new Player('o');
-
-document.addEventListener("DOMContentLoaded", () => {
-    // New game with two human players (replace with AI if needed)
-    const player1 = new Player('x');
-    const player2 = new Player('o');
-
-    // Start a new game with the specified depth and players
-    newGame(player1, player2);
-
-    // Button click event for starting a new game
-    document.getElementById("newGamePvP").addEventListener('click', () => {
-        newGame(player1, player2);
-    });
-});
+export function drawWinningLine(statusObject) {
+    if (!statusObject) return;
+    const { winner, direction, row, column, diagonal } = statusObject;
+    if (winner === "draw") return;
+    const board = document.getElementById("board");
+    addClass(board, `${direction.toLowerCase()}-${row || column || diagonal}`);
+    setTimeout(() => {
+        addClass(board, "fullLine");
+    }, 50);
+}
