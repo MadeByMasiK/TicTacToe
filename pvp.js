@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
     newGame(player1, player2);
 
     // tuo nappulan html-sivulle, mikä aloittaa uuden pelin
-    document.getElementById("newGameHard").addEventListener('click', () => {
+    document.getElementById("newGamePvP").addEventListener('click', () => {
         newGame(player1, player2);
     });
 });
